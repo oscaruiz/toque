@@ -7,7 +7,7 @@ import android.util.Log
 
 class NotificationRelayService : NotificationListenerService() {
 
-    private val relayedIds = mutableMapOf<String, Int>()
+    private val activeRingers = mutableMapOf<String, CallRinger>()
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val notification = sbn.notification
@@ -38,7 +38,9 @@ class NotificationRelayService : NotificationListenerService() {
 
         when (val decision = CallFilter.decide(incoming)) {
             is RelayDecision.Relay -> {
-                val id = relayedIds.getOrPut(sbn.key) { IdGen.next() }
+                if (sbn.key in activeRingers) return
+
+                val id = IdGen.next()
                 RelayNotifier.postCall(
                     context = this,
                     id = id,
@@ -47,14 +49,30 @@ class NotificationRelayService : NotificationListenerService() {
                     text = decision.text,
                     actions = decision.actions,
                 )
+
+                val ringer = CallRinger(
+                    context = this,
+                    sourceName = decision.sourceName,
+                    title = decision.title,
+                    text = decision.text,
+                    actions = decision.actions,
+                )
+                ringer.start(id)
+                activeRingers[sbn.key] = ringer
             }
             is RelayDecision.Ignore -> { /* nothing */ }
         }
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
-        val id = relayedIds.remove(sbn.key) ?: return
-        RelayNotifier.cancel(this, id)
+        val ringer = activeRingers.remove(sbn.key) ?: return
+        ringer.stop()
+    }
+
+    override fun onListenerDisconnected() {
+        activeRingers.values.forEach { it.stop() }
+        activeRingers.clear()
+        super.onListenerDisconnected()
     }
 
     companion object {

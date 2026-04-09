@@ -8,12 +8,35 @@ Alpha — work in progress. WhatsApp only, notification only (no answering from 
 
 ## Usage
 
-1. Install Toque on your phone.
-2. Open the app and grant notification access permission.
-3. In your watch's companion app (Mi Fitness, Zepp Life, Huawei Health, etc.):
-   - **Disable** WhatsApp notifications.
-   - **Enable** Toque notifications.
-4. Done: WhatsApp VoIP calls will buzz your watch, but chats won't.
+### 1. Install and configure Toque
+
+1. Install the app on your phone.
+2. Open Toque — you'll see a status screen showing whether notification access is granted.
+3. Tap **"Conceder acceso"** (Grant access) — this opens the Android system settings for Notification Listener services.
+4. In the system screen, find **Toque** in the list and toggle it **on**. Confirm the system warning dialog.
+5. Go back to Toque — the status should now show a green **granted** message.
+
+### 2. (Optional) Adjust notification settings
+
+Tap **"Ajustes de notificación de Toque"** (Toque notification settings) to open Android's notification settings for the app. Here you can control the notification channel's sound, vibration, and priority — useful to make sure relayed calls feel distinct on your phone.
+
+### 3. Configure your watch's companion app
+
+In your watch's companion app (Mi Fitness, Zepp Life, Huawei Health, etc.):
+- **Disable** WhatsApp notifications.
+- **Enable** Toque notifications.
+
+### 4. Done
+
+WhatsApp VoIP calls will buzz your watch, but chats won't. The service survives reboots automatically — no need to reopen the app after restarting your phone.
+
+### Android permissions
+
+| Permission | Why |
+|---|---|
+| **Notification Listener** (granted in system settings) | Required to read incoming WhatsApp notifications and detect VoIP calls. |
+| **Post Notifications** (Android 13+) | Required to post the relayed call notification that your watch will pick up. |
+| **Receive Boot Completed** | Ensures the service reconnects automatically after a phone reboot. |
 
 ## Build
 
