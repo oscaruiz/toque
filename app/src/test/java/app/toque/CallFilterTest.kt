@@ -2,6 +2,7 @@ package app.toque
 
 import android.app.Notification
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -14,7 +15,8 @@ class CallFilterTest {
         title: String? = null,
         text: String? = null,
         isOngoing: Boolean = false,
-    ) = IncomingNotification(packageName, channelId, category, title, text, isOngoing)
+        actions: Array<Notification.Action>? = null,
+    ) = IncomingNotification(packageName, channelId, category, title, text, isOngoing, actions)
 
     @Test
     fun `ignores unknown package`() {
@@ -84,6 +86,16 @@ class CallFilterTest {
             )
         )
         assertTrue(decision is RelayDecision.Ignore)
+    }
+
+    @Test
+    fun `passes null actions through to relay decision`() {
+        val decision = CallFilter.decide(
+            notification(channelId = "voip_channel", title = "Alice", text = "Llamada", actions = null)
+        )
+        assertTrue(decision is RelayDecision.Relay)
+        val relay = decision as RelayDecision.Relay
+        assertNull(relay.actions)
     }
 
     @Test

@@ -17,7 +17,10 @@
       "Bash(./gradlew assembleDebug)",
       "Bash(/c/Users/oscar/AppData/Local/Android/Sdk/platform-tools/adb.exe install:*)",
       "Bash(/c/Users/oscar/AppData/Local/Android/Sdk/platform-tools/adb.exe logcat:*)",
-      "Bash(/c/Users/oscar/AppData/Local/Android/Sdk/platform-tools/adb.exe shell:*)"
+      "Bash(/c/Users/oscar/AppData/Local/Android/Sdk/platform-tools/adb.exe shell:*)",
+      "WebSearch",
+      "Bash(git remote:*)",
+      "Bash(./gradlew installDebug)"
     ]
   }
 }

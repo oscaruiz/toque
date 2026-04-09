@@ -9,6 +9,7 @@ data class IncomingNotification(
     val title: String?,
     val text: String?,
     val isOngoing: Boolean,
+    val actions: Array<Notification.Action>? = null,
 )
 
 sealed class RelayDecision {
@@ -17,6 +18,7 @@ sealed class RelayDecision {
         val sourceName: String,
         val title: String,
         val text: String,
+        val actions: Array<Notification.Action>? = null,
     ) : RelayDecision()
 
     object Ignore : RelayDecision()
@@ -43,6 +45,7 @@ object CallFilter {
             sourceName = source.displayName,
             title = title,
             text = text,
+            actions = n.actions,
         )
     }
 

@@ -24,10 +24,16 @@ object RelayNotifier {
         manager.createNotificationChannel(channel)
     }
 
-    // PHASE4: add optional `actions: List<Notification.Action>? = null` parameter
-    fun postCall(context: Context, id: Int, sourceName: String, title: String, text: String) {
+    fun postCall(
+        context: Context,
+        id: Int,
+        sourceName: String,
+        title: String,
+        text: String,
+        actions: Array<android.app.Notification.Action>? = null,
+    ) {
         ensureChannel(context)
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_menu_call)
             .setContentTitle("\uD83D\uDCDE $title")
             .setContentText("$sourceName · $text")
@@ -35,7 +41,13 @@ object RelayNotifier {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
             .setAutoCancel(false)
-            .build()
+
+        actions?.forEach { action ->
+            @Suppress("DEPRECATION")
+            builder.addAction(action.icon, action.title, action.actionIntent)
+        }
+
+        val notification = builder.build()
 
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.notify(id, notification)

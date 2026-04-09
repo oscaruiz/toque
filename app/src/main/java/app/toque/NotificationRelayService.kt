@@ -33,6 +33,7 @@ class NotificationRelayService : NotificationListenerService() {
             title = title,
             text = text,
             isOngoing = isOngoing,
+            actions = notification.actions,
         )
 
         when (val decision = CallFilter.decide(incoming)) {
@@ -44,6 +45,7 @@ class NotificationRelayService : NotificationListenerService() {
                     sourceName = decision.sourceName,
                     title = decision.title,
                     text = decision.text,
+                    actions = decision.actions,
                 )
             }
             is RelayDecision.Ignore -> { /* nothing */ }
