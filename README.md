@@ -18,7 +18,7 @@ Alpha — work in progress. WhatsApp only, notification only (no answering from 
 
 ### 2. (Optional) Adjust notification settings
 
-Tap **"Ajustes de notificación de Toque"** (Toque notification settings) to open Android's notification settings for the app. Here you can control the notification channel's sound, vibration, and priority — useful to make sure relayed calls feel distinct on your phone.
+Tap **"Toque notification settings"**  to open Android's notification settings for the app. Here you can control the notification channel's sound, vibration, and priority — useful to make sure relayed calls feel distinct on your phone.
 
 ### 3. Configure your watch's companion app
 
