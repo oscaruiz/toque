@@ -38,7 +38,12 @@ class NotificationRelayService : NotificationListenerService() {
 
         when (val decision = CallFilter.decide(incoming)) {
             is RelayDecision.Relay -> {
-                if (sbn.key in activeRingers) return
+                if (sbn.key in activeRingers) {
+                    if (isCallInProgress(incoming)) {
+                        activeRingers.remove(sbn.key)?.stop()
+                    }
+                    return
+                }
 
                 val id = IdGen.next()
                 RelayNotifier.postCall(
@@ -75,7 +80,22 @@ class NotificationRelayService : NotificationListenerService() {
         super.onListenerDisconnected()
     }
 
+    // WhatsApp pasa de Answer+Decline a solo Hang up al contestar.
+    // No usamos isOngoing: WhatsApp lo pone a true también en la entrante.
+    private fun isCallInProgress(n: IncomingNotification): Boolean {
+        val actions = n.actions
+        if (actions.isNullOrEmpty()) return true
+        return actions.none { action ->
+            val label = action.title?.toString()?.lowercase() ?: ""
+            ANSWER_LABELS.any { it in label }
+        }
+    }
+
     companion object {
         private const val TAG_DISCOVERY = "Toque/Discovery"
+
+        private val ANSWER_LABELS = listOf(
+            "answer", "accept", "contestar", "aceptar", "responder", "atender",
+        )
     }
 }

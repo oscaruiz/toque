@@ -41,7 +41,6 @@ object RelayNotifier {
             .setContentText("$sourceName · $text")
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setOngoing(true)
             .setAutoCancel(false)
             .setWhen(System.currentTimeMillis())
 
