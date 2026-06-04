@@ -12,13 +12,13 @@ Alpha — work in progress. WhatsApp only, notification only (no answering from 
 
 1. Install the app on your phone.
 2. Open Toque — you'll see a status screen showing whether notification access is granted.
-3. Tap **"Conceder acceso"** (Grant access) — this opens the Android system settings for Notification Listener services.
+3. Tap **"Grant access"**  — this opens the Android system settings for Notification Listener services.
 4. In the system screen, find **Toque** in the list and toggle it **on**. Confirm the system warning dialog.
 5. Go back to Toque — the status should now show a green **granted** message.
 
 ### 2. (Optional) Adjust notification settings
 
-Tap **"Ajustes de notificación de Toque"** (Toque notification settings) to open Android's notification settings for the app. Here you can control the notification channel's sound, vibration, and priority — useful to make sure relayed calls feel distinct on your phone.
+Tap **"Toque notification settings"**  to open Android's notification settings for the app. Here you can control the notification channel's sound, vibration, and priority — useful to make sure relayed calls feel distinct on your phone.
 
 ### 3. Configure your watch's companion app
 
